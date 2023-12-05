@@ -7,6 +7,18 @@ REL     = $(shell git rev-parse --short=4 HEAD)
 BRANCH  = $(shell git rev-parse --abbrev-ref HEAD)
 CORES  ?= $(shell grep processor /proc/cpuinfo | wc -l)
 
+# version
+JQUERY_VER    = 3.7.1
+JQUERY_UI_VER = 1.13.2
+
+# dir
+CWD = $(CURDIR)
+BIN = $(CWD)/bin
+DOC = $(CWD)/doc
+SRC = $(CWD)/src
+TMP = $(CWD)/tmp
+GZ  = $(HOME)/gz
+
 # tool
 CURL = curl -L -o
 DC   = dmd
@@ -17,13 +29,14 @@ RUN  = dub run   --compiler=$(DC)
 D += $(wildcard src/*.d)
 J += $(wildcard dub*.json)
 S += $(wildcard static/*.js)
+T += $(wildcard views/*)
 
 # all
 .PHONY: all run
 all: bin/$(MODULE)
-bin/$(MODULE): $(D) $(J)
+bin/$(MODULE): $(D) $(J) $(S) $(T)
 	$(BLD)
-run: $(D) $(J)
+run: $(D) $(J) $(S) $(T)
 	$(RUN)
 
 # format
@@ -60,7 +73,20 @@ $(APT_SRC)/%: tmp/%
 tmp/d-apt.list:
 	sudo $(CURL) $@ http://master.dl.sourceforge.net/project/d-apt/files/d-apt.list
 
-gz:
+gz: static/cdn/jquery.js static/cdn/jquery-ui.js
+
+static/cdn/jquery.js:
+	$(CURL) $@ https://code.jquery.com/jquery-$(JQUERY_VER).min.js
+static/cdn/jquery-ui.js: $(GZ)/jquery-ui-$(JQUERY_UI_VER).zip
+	unzip $< -d static/cdn
+	mv static/cdn/jquery-ui-$(JQUERY_UI_VER)/images/* static/cdn/images/
+	mv static/cdn/jquery-ui-$(JQUERY_UI_VER)/jquery-ui.min.js $@
+	touch $@ ; rm -r static/cdn/jquery-ui-$(JQUERY_UI_VER)
+
+$(GZ)/jquery-ui-$(JQUERY_UI_VER).zip:
+	$(CURL) $@ https://jqueryui.com/resources/download/jquery-ui-$(JQUERY_UI_VER).zip
+$(GZ)/jquery-ui-themes-$(JQUERY_UI_VER).zip:
+	$(CURL) $@ https://jqueryui.com/resources/download/jquery-ui-themes-$(JQUERY_UI_VER).zip
 
 # merge
 MERGE += Makefile README.md LICENSE $(D) $(J) $(S)

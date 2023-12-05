@@ -1,6 +1,5 @@
 import std.stdio;
 
-
 import vibe.vibe;
 
 HTTPServerSettings settings = null;
