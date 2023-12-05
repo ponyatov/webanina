@@ -46,7 +46,7 @@ doc/BuildTimekeepWithVibe.pdf:
 
 # install
 APT_SRC = /etc/apt/sources.list.d
-ETC_APT = $(APT_SRC)/d-apt.list $(APT_SRC)/llvm.list
+ETC_APT = $(APT_SRC)/d-apt.list
 .PHONY: install update gz
 install: doc gz $(ETC_APT)
 	sudo apt update && sudo apt --allow-unauthenticated install -yu d-apt-keyring

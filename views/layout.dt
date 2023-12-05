@@ -1,0 +1,16 @@
+doctype html
+html(lang='ru')
+    head
+        title vendi
+        link(rel="stylesheet", href="cdn/dark-hive.css")
+        link(rel="stylesheet", href="css.css")
+        script(src="cdn/jquery.js")
+        script(src="cdn/jquery-ui.js")
+    body
+        img(src="/logo.png",id='logo')
+        block body
+        a(class="ui-button ui-icon-home",href="/") home
+        a(class="ui-button",href="/about") about
+        a(class="ui-button",href="/hello") hello
+        input(type="text",name='date',id='date')
+    script(src="/js.js")
