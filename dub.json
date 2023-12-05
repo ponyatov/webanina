@@ -1,0 +1,12 @@
+{
+    "name":          "webanina",
+    "description":   "Web dev shit with D lang backend",
+    "homepage":      "https://github.com/ponyatov/webanina",
+    "authors":      ["Dmitry Ponyatov <dponyatov@gmail.com>"],
+    "copyright":     "Copyright © 2023, Dmitry Ponyatov <dponyatov@gmail.com>",
+    "license":       "MIT",
+    "targetType":    "executable",
+    "targetPath":    "bin",
+    "dependencies": {
+    }
+}

@@ -1,0 +1,3 @@
+git make curl
+code meld
+d-apt-keyring dmd-compiler dmd-tools dub g++
